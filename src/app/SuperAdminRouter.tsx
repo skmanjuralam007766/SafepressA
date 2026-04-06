@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router';
 import { DashboardLayout } from './components/layout/DashboardLayout';
-import { SuperAdminDashboard } from './pages/superadmin/SuperAdminDashboard';
-import { SuperAdminHeatMap } from './pages/superadmin/SuperAdminHeatMap';
-import { SuperAdminUsers } from './pages/superadmin/SuperAdminUsers';
-import { SuperAdminComplaints } from './pages/superadmin/SuperAdminComplaints';
-import { SuperAdminControlRooms } from './pages/superadmin/SuperAdminControlRooms';
-import { SuperAdminAnalytics } from './pages/superadmin/SuperAdminAnalytics';
-import { SuperAdminSettings } from './pages/superadmin/SuperAdminSettings';
+const SuperAdminDashboard = React.lazy(() => import('./pages/superadmin/SuperAdminDashboard').then(m => ({ default: m.SuperAdminDashboard })));
+const SuperAdminHeatMap = React.lazy(() => import('./pages/superadmin/SuperAdminHeatMap').then(m => ({ default: m.SuperAdminHeatMap })));
+const SuperAdminUsers = React.lazy(() => import('./pages/superadmin/SuperAdminUsers').then(m => ({ default: m.SuperAdminUsers })));
+const SuperAdminComplaints = React.lazy(() => import('./pages/superadmin/SuperAdminComplaints').then(m => ({ default: m.SuperAdminComplaints })));
+const SuperAdminControlRooms = React.lazy(() => import('./pages/superadmin/SuperAdminControlRooms').then(m => ({ default: m.SuperAdminControlRooms })));
+const SuperAdminAnalytics = React.lazy(() => import('./pages/superadmin/SuperAdminAnalytics').then(m => ({ default: m.SuperAdminAnalytics })));
+const SuperAdminSettings = React.lazy(() => import('./pages/superadmin/SuperAdminSettings').then(m => ({ default: m.SuperAdminSettings })));
 import { LayoutDashboard, MapPin, Users, MessageSquare, Building2, BarChart3, Settings } from 'lucide-react';
 
 const superAdminNavItems = [
@@ -39,15 +39,17 @@ export function SuperAdminRouter() {
         pageTitle={title}
         userRole="System Overseer"
     >
-      <Routes>
-        <Route path="/" element={<SuperAdminDashboard />} />
-        <Route path="/heatmap" element={<SuperAdminHeatMap />} />
-        <Route path="/users" element={<SuperAdminUsers />} />
-        <Route path="/complaints" element={<SuperAdminComplaints />} />
-        <Route path="/control-rooms" element={<SuperAdminControlRooms />} />
-        <Route path="/analytics" element={<SuperAdminAnalytics />} />
-        <Route path="/settings" element={<SuperAdminSettings />} />
-      </Routes>
+      <Suspense fallback={<div className="flex items-center justify-center min-h-screen bg-background text-muted-foreground">Loading page...</div>}>
+        <Routes>
+          <Route path="/" element={<SuperAdminDashboard />} />
+          <Route path="/heatmap" element={<SuperAdminHeatMap />} />
+          <Route path="/users" element={<SuperAdminUsers />} />
+          <Route path="/complaints" element={<SuperAdminComplaints />} />
+          <Route path="/control-rooms" element={<SuperAdminControlRooms />} />
+          <Route path="/analytics" element={<SuperAdminAnalytics />} />
+          <Route path="/settings" element={<SuperAdminSettings />} />
+        </Routes>
+      </Suspense>
     </DashboardLayout>
   );
 }
