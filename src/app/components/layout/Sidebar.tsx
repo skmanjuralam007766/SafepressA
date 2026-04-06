@@ -16,13 +16,13 @@ interface SidebarProps {
 
 export function Sidebar({ items, title }: SidebarProps) {
   return (
-    <aside className="fixed left-0 top-0 z-40 h-screen w-64 border-r border-slate-200 bg-white/80 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/80">
-      <div className="flex h-16 items-center border-b border-slate-200 px-6 dark:border-slate-800">
-        <div className="flex items-center gap-2 font-bold text-xl bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
+    <aside className="fixed left-0 top-0 z-50 h-screen w-screen lg:w-64 border-r border-slate-200 bg-white/90 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/90 lg:bg-white/80 lg:dark:bg-slate-900/80 shadow-2xl lg:shadow-none lg:border-r transition-transform duration-300 ease-in-out">
+      <div className="flex h-16 items-center border-b border-slate-200 px-4 sm:px-6 dark:border-slate-800">
+        <div className="flex items-center gap-2 font-bold text-lg sm:text-xl bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent truncate">
             {title}
         </div>
       </div>
-      <nav className="space-y-1 p-4">
+      <nav className="space-y-1 p-4 overflow-y-auto max-h-[calc(100vh-12rem)]">
         {items.map((item) => (
           <NavLink
             key={item.href}
@@ -36,8 +36,8 @@ export function Sidebar({ items, title }: SidebarProps) {
               )
             }
           >
-            <item.icon className="h-5 w-5" />
-            {item.label}
+            <item.icon className="h-5 w-5 flex-shrink-0" />
+            <span className="truncate">{item.label}</span>
           </NavLink>
         ))}
       </nav>

@@ -1,0 +1,1 @@
+- ✅ Update Sidebar.tsx: mobile overlay (`w-screen lg:w-64`)
